@@ -1,0 +1,333 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// User
+// ─────────────────────────────────────────────
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  username     String    @unique
+  passwordHash String    @map("password_hash")
+  displayName  String?   @map("display_name")
+  avatarUrl    String?   @map("avatar_url")
+  isActive     Boolean   @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  // Relations
+  projects      Project[]
+  refreshTokens RefreshToken[]
+  settings      UserSetting?
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+// Refresh Token
+// ─────────────────────────────────────────────
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  isRevoked Boolean  @default(false) @map("is_revoked")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+// ─────────────────────────────────────────────
+// User Settings
+// ─────────────────────────────────────────────
+model UserSetting {
+  id                  String   @id @default(cuid())
+  userId              String   @unique @map("user_id")
+  theme               String   @default("dark")
+  language            String   @default("en")
+  compressionDefault  String   @default("balanced") @map("compression_default")
+  exportFormat        String   @default("jpeg") @map("export_format")
+  autoScan            Boolean  @default(true) @map("auto_scan")
+  autoSave            Boolean  @default(true) @map("auto_save")
+  maxUploadSizeMb     Int      @default(50) @map("max_upload_size_mb")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+// ─────────────────────────────────────────────
+// Project
+// ─────────────────────────────────────────────
+model Project {
+  id           String    @id @default(cuid())
+  userId       String    @map("user_id")
+  name         String
+  description  String?
+  thumbnailUrl String?   @map("thumbnail_url")
+  status       ProjectStatus @default(ACTIVE)
+  totalImages  Int       @default(0) @map("total_images")
+  totalSizeBytes BigInt  @default(0) @map("total_size_bytes")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  images  Image[]
+
+  @@index([userId])
+  @@index([status])
+  @@map("projects")
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  DELETED
+}
+
+// ─────────────────────────────────────────────
+// Image
+// ─────────────────────────────────────────────
+model Image {
+  id              String      @id @default(cuid())
+  projectId       String      @map("project_id")
+  originalFilename String     @map("original_filename")
+  sanitizedFilename String    @map("sanitized_filename")
+  mimeType        String      @map("mime_type")
+  sizeBytes       BigInt      @map("size_bytes")
+  width           Int?
+  height          Int?
+  format          String?
+  status          ImageStatus @default(PENDING)
+
+  // ImageKit storage
+  imagekitFileId  String?     @map("imagekit_file_id")
+  imagekitUrl     String?     @map("imagekit_url")
+  imagekitPath    String?     @map("imagekit_path")
+
+  // Processed variants
+  processedUrl    String?     @map("processed_url")
+  thumbnailUrl    String?     @map("thumbnail_url")
+
+  // Metadata flags
+  hasExif         Boolean     @default(false) @map("has_exif")
+  hasIptc         Boolean     @default(false) @map("has_iptc")
+  hasXmp          Boolean     @default(false) @map("has_xmp")
+  hasGps          Boolean     @default(false) @map("has_gps")
+  hasC2pa         Boolean     @default(false) @map("has_c2pa")
+  c2paVerified    Boolean?    @map("c2pa_verified")
+
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+  deletedAt       DateTime?   @map("deleted_at")
+
+  project         Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  metadata        ImageMetadata?
+  c2paManifest    C2paManifest?
+  histories       ImageHistory[]
+  exports         ExportRecord[]
+
+  @@index([projectId])
+  @@index([status])
+  @@map("images")
+}
+
+enum ImageStatus {
+  PENDING
+  SCANNING
+  READY
+  PROCESSING
+  ERROR
+}
+
+// ─────────────────────────────────────────────
+// Image Metadata
+// ─────────────────────────────────────────────
+model ImageMetadata {
+  id          String   @id @default(cuid())
+  imageId     String   @unique @map("image_id")
+
+  // Raw full JSON blobs
+  exifData    Json?    @map("exif_data")
+  iptcData    Json?    @map("iptc_data")
+  xmpData     Json?    @map("xmp_data")
+  iccData     Json?    @map("icc_data")
+  gpsData     Json?    @map("gps_data")
+
+  // Parsed highlights
+  cameraModel   String? @map("camera_model")
+  cameraMake    String? @map("camera_make")
+  lensModel     String? @map("lens_model")
+  software      String?
+  colorProfile  String? @map("color_profile")
+  focalLength   String? @map("focal_length")
+  aperture      String?
+  shutterSpeed  String? @map("shutter_speed")
+  iso           String?
+  capturedAt    DateTime? @map("captured_at")
+  modifiedAt    DateTime? @map("modified_at")
+
+  // GPS parsed
+  latitude      Float?
+  longitude     Float?
+  altitude      Float?
+
+  scannedAt   DateTime  @default(now()) @map("scanned_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  image Image @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@map("image_metadata")
+}
+
+// ─────────────────────────────────────────────
+// C2PA Manifest
+// ─────────────────────────────────────────────
+model C2paManifest {
+  id           String   @id @default(cuid())
+  imageId      String   @unique @map("image_id")
+  isCustom     Boolean  @default(false) @map("is_custom")
+  isVerified   Boolean? @map("is_verified")
+
+  // Creator info
+  creator      String?
+  organization String?
+  website      String?
+  license      String?
+  copyright    String?
+
+  // AI info
+  generator    String?
+  aiModel      String?  @map("ai_model")
+  prompt       String?
+  negativePrompt String? @map("negative_prompt")
+  workflow     String?
+  source       String?
+
+  // Raw manifest JSON
+  manifestJson Json?    @map("manifest_json")
+  assertionsJson Json?  @map("assertions_json")
+  signatureInfo Json?   @map("signature_info")
+
+  timestamp    DateTime?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  image Image @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@map("c2pa_manifests")
+}
+
+// ─────────────────────────────────────────────
+// Image History
+// ─────────────────────────────────────────────
+model ImageHistory {
+  id          String      @id @default(cuid())
+  imageId     String      @map("image_id")
+  action      HistoryAction
+  description String?
+  metadata    Json?
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  image Image @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@index([imageId])
+  @@index([action])
+  @@map("image_histories")
+}
+
+enum HistoryAction {
+  UPLOADED
+  METADATA_SCANNED
+  COMPRESSED
+  RESIZED
+  CONVERTED
+  EXIF_REMOVED
+  GPS_REMOVED
+  METADATA_REMOVED
+  C2PA_REMOVED
+  C2PA_CREATED
+  C2PA_REPLACED
+  EXPORTED
+  DOWNLOADED
+  DELETED
+  RESTORED
+}
+
+// ─────────────────────────────────────────────
+// Export Record
+// ─────────────────────────────────────────────
+model ExportRecord {
+  id          String       @id @default(cuid())
+  imageId     String?      @map("image_id")
+  projectId   String?      @map("project_id")
+  format      String
+  exportType  ExportType   @map("export_type")
+  status      ExportStatus @default(PENDING)
+  fileUrl     String?      @map("file_url")
+  filePath    String?      @map("file_path")
+  sizeBytes   BigInt?      @map("size_bytes")
+  error       String?
+  createdAt   DateTime     @default(now()) @map("created_at")
+  completedAt DateTime?    @map("completed_at")
+
+  image Image? @relation(fields: [imageId], references: [id], onDelete: SetNull)
+
+  @@index([imageId])
+  @@map("export_records")
+}
+
+enum ExportType {
+  SINGLE
+  MULTIPLE
+  PROJECT_ZIP
+}
+
+enum ExportStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+  EXPIRED
+}
+
+// ─────────────────────────────────────────────
+// C2PA Template (user-saved templates)
+// ─────────────────────────────────────────────
+model C2paTemplate {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  name         String
+  creator      String?
+  organization String?
+  website      String?
+  license      String?
+  copyright    String?
+  generator    String?
+  aiModel      String?  @map("ai_model")
+  workflow     String?
+  source       String?
+  isDefault    Boolean  @default(false) @map("is_default")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("c2pa_templates")
+}

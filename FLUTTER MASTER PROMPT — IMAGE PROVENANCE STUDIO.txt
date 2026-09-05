@@ -1,0 +1,795 @@
+# FLUTTER MASTER PROMPT — IMAGE PROVENANCE STUDIO
+
+Kamu adalah **Senior Flutter Engineer**, **Senior UI/UX Designer**, **Mobile Architect**, **Desktop Architect**, dan **Product Designer** yang bertugas membangun aplikasi profesional bernama **Image Provenance Studio**.
+
+Aplikasi ini adalah frontend resmi untuk backend yang sudah dirancang sebelumnya.
+
+Target kualitas aplikasi harus setara software profesional seperti:
+
+* Adobe Lightroom
+* Adobe Express
+* Figma Desktop
+* VS Code
+* Photopea
+
+Aplikasi harus modern, cepat, modular, scalable, clean, premium, dan production-ready.
+
+---
+
+# PLATFORM
+
+Gunakan Flutter Stable terbaru.
+
+Support:
+
+* Windows
+* macOS
+* Linux
+* Android
+* iOS
+* Web
+
+Semua platform menggunakan satu codebase.
+
+---
+
+# TECH STACK
+
+Gunakan:
+
+* Flutter
+* Dart
+* Riverpod
+* GoRouter
+* Dio
+* Freezed
+* Json Serializable
+* Drift atau Hive untuk cache lokal
+* Shared Preferences
+* flutter_secure_storage
+* file_picker
+* desktop_drop
+* image
+* flutter_animate
+* Material 3
+* Google Fonts
+* Responsive Framework
+
+Jangan gunakan package yang sudah tidak aktif.
+
+---
+
+# DESIGN SYSTEM
+
+Tema:
+
+Modern
+
+Minimal
+
+Professional
+
+Clean
+
+Premium
+
+Dark Mode sebagai default.
+
+Tambahkan Light Mode.
+
+Gunakan Material 3.
+
+Primary Color:
+
+#2563EB
+
+Secondary:
+
+#0F172A
+
+Success:
+
+#16A34A
+
+Warning:
+
+#F59E0B
+
+Danger:
+
+#DC2626
+
+Background Dark:
+
+#09090B
+
+Background Light:
+
+#F8FAFC
+
+Radius:
+
+16 px
+
+Shadow lembut.
+
+Animasi halus.
+
+Tidak boleh terlihat seperti template.
+
+---
+
+# APP STRUCTURE
+
+Gunakan Clean Architecture.
+
+Pisahkan menjadi:
+
+lib/
+
+core/
+
+config/
+
+constants/
+
+theme/
+
+router/
+
+services/
+
+network/
+
+models/
+
+repositories/
+
+features/
+
+widgets/
+
+pages/
+
+providers/
+
+utils/
+
+extensions/
+
+helpers/
+
+shared/
+
+assets/
+
+localization/
+
+Tidak boleh mencampur UI dan Business Logic.
+
+---
+
+# AUTH FLOW
+
+Halaman:
+
+Splash Screen
+
+↓
+
+Login
+
+↓
+
+Register
+
+↓
+
+Forgot Password
+
+↓
+
+Dashboard
+
+Gunakan JWT dari backend.
+
+Support:
+
+Remember Login
+
+Auto Login
+
+Logout
+
+Token Refresh
+
+Secure Storage
+
+---
+
+# DASHBOARD
+
+Tampilkan:
+
+Welcome
+
+Recent Projects
+
+Recent Images
+
+Storage Usage
+
+Latest Activity
+
+Quick Action
+
+Statistics
+
+Button besar:
+
+New Project
+
+Open Project
+
+History
+
+Templates
+
+Settings
+
+---
+
+# PROJECT
+
+Satu user dapat memiliki banyak project.
+
+Project memiliki:
+
+Name
+
+Description
+
+Thumbnail
+
+Created Date
+
+Updated Date
+
+Image Count
+
+Status
+
+Project Card modern.
+
+Support Search.
+
+Support Sort.
+
+Support Grid.
+
+Support List.
+
+---
+
+# WORKSPACE
+
+Workspace adalah halaman utama.
+
+Layout Desktop:
+
+Sidebar kiri
+
+↓
+
+Image List
+
+↓
+
+Preview
+
+↓
+
+Properties Panel
+
+↓
+
+Bottom Status Bar
+
+Responsive ke semua ukuran layar.
+
+---
+
+# SIDEBAR
+
+Menu:
+
+Dashboard
+
+Projects
+
+Workspace
+
+History
+
+Templates
+
+Certificates
+
+Settings
+
+Profile
+
+Logout
+
+---
+
+# IMAGE IMPORT
+
+Support:
+
+Drag and Drop
+
+Browse File
+
+Paste Image
+
+Maximum upload sesuai backend.
+
+Support:
+
+JPEG
+
+PNG
+
+WEBP
+
+TIFF
+
+Setelah upload:
+
+Auto Scan Metadata.
+
+Tidak perlu klik tombol Scan.
+
+---
+
+# IMAGE LIST
+
+Setiap image card menampilkan:
+
+Thumbnail
+
+Filename
+
+Resolution
+
+File Size
+
+C2PA Status
+
+EXIF Status
+
+Progress
+
+Checkbox
+
+Support:
+
+Multi Select
+
+Shift Select
+
+Ctrl Select
+
+---
+
+# IMAGE PREVIEW
+
+Zoom
+
+Pan
+
+Fit
+
+Original Size
+
+Compare Before
+
+Compare After
+
+Fullscreen
+
+---
+
+# PROPERTIES PANEL
+
+Gunakan Tab.
+
+Overview
+
+Metadata
+
+C2PA
+
+Compression
+
+History
+
+Export
+
+---
+
+# METADATA TAB
+
+Tampilkan:
+
+EXIF
+
+IPTC
+
+XMP
+
+GPS
+
+ICC
+
+Software
+
+Camera
+
+Lens
+
+Created Date
+
+Modified Date
+
+Color Profile
+
+Semua data berasal dari backend.
+
+---
+
+# C2PA TAB
+
+Jika ada:
+
+Creator
+
+Organization
+
+Manifest
+
+Assertions
+
+Signature
+
+AI Generator
+
+Timestamp
+
+Verification
+
+Jika tidak ada:
+
+No C2PA Found
+
+Button:
+
+Create Custom C2PA
+
+---
+
+# TOOLBAR
+
+Button:
+
+Upload
+
+Scan
+
+Remove Metadata
+
+Remove EXIF
+
+Remove GPS
+
+Remove C2PA
+
+Compress
+
+Resize
+
+Convert
+
+Create C2PA
+
+Export
+
+Download
+
+---
+
+# BATCH MODE
+
+Support memilih banyak gambar.
+
+Action:
+
+Compress
+
+Remove Metadata
+
+Remove C2PA
+
+Create C2PA
+
+Resize
+
+Export
+
+Semua berjalan sekaligus.
+
+---
+
+# COMPRESSION
+
+Mode:
+
+Keep Original
+
+High Quality
+
+Balanced
+
+Maximum Compression
+
+Custom
+
+Slider Quality.
+
+Preview ukuran file.
+
+---
+
+# CUSTOM C2PA
+
+Form:
+
+Creator
+
+Organization
+
+Website
+
+License
+
+Copyright
+
+Generator
+
+AI Model
+
+Prompt
+
+Negative Prompt
+
+Workflow
+
+Source
+
+Timestamp
+
+Template
+
+Save Template
+
+---
+
+# HISTORY
+
+Semua aktivitas project.
+
+Filter:
+
+Today
+
+Yesterday
+
+This Week
+
+This Month
+
+Search.
+
+Restore Project.
+
+---
+
+# EXPORT
+
+Single Image
+
+Multiple Images
+
+ZIP
+
+Progress Bar.
+
+Estimasi waktu.
+
+---
+
+# SETTINGS
+
+Theme
+
+Language
+
+API URL
+
+Storage
+
+Cache
+
+Auto Save
+
+Auto Scan
+
+Compression Default
+
+Export Default
+
+About
+
+---
+
+# RESPONSIVE
+
+Desktop menjadi prioritas utama.
+
+Tablet kedua.
+
+Mobile tetap nyaman digunakan.
+
+Gunakan adaptive layout.
+
+---
+
+# STATE MANAGEMENT
+
+Gunakan Riverpod.
+
+Semua state dipisahkan.
+
+Jangan menggunakan setState untuk logic besar.
+
+---
+
+# API
+
+Semua komunikasi menggunakan Dio.
+
+Gunakan:
+
+Interceptor
+
+Retry
+
+Refresh Token
+
+Timeout
+
+Global Error Handler
+
+---
+
+# ERROR HANDLING
+
+Buat halaman:
+
+No Internet
+
+Unauthorized
+
+404
+
+500
+
+Maintenance
+
+Loading
+
+Empty State
+
+Semua memiliki desain premium.
+
+---
+
+# PERFORMANCE
+
+Gunakan:
+
+Lazy Loading
+
+Pagination
+
+Image Cache
+
+Memory Optimization
+
+Debounce Search
+
+Background Task
+
+Jangan membuat rebuild yang tidak perlu.
+
+---
+
+# ANIMATION
+
+Gunakan animasi ringan.
+
+Fade
+
+Scale
+
+Slide
+
+Hero
+
+Hover Desktop
+
+Progress Animation
+
+Loading Skeleton
+
+Tidak boleh berlebihan.
+
+---
+
+# CODE QUALITY
+
+Gunakan:
+
+Clean Architecture
+
+Repository Pattern
+
+SOLID
+
+DRY
+
+KISS
+
+Type Safe
+
+Null Safety
+
+Lint Rules
+
+Komentar seperlunya.
+
+Kode harus mudah dipelihara.
+
+---
+
+# OUTPUT YANG HARUS DIBUAT
+
+Bangun aplikasi Flutter secara bertahap mulai dari:
+
+1. Struktur folder lengkap.
+2. Konfigurasi project.
+3. Theme dan Design System.
+4. Routing.
+5. Authentication.
+6. Dashboard.
+7. Project Management.
+8. Workspace.
+9. Integrasi API.
+10. Batch Processing UI.
+11. History.
+12. Settings.
+13. Optimasi.
+14. Build Production.
+
+Jangan membuat contoh sederhana. Bangun aplikasi dengan kualitas enterprise yang siap menjadi frontend utama untuk sistem **Image Provenance Studio**.

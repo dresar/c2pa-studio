@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+storage/temp/*
+storage/uploads/*
+storage/processed/*
+storage/exports/*
+logs/*.log
+!storage/temp/.gitkeep
+!storage/uploads/.gitkeep
+!storage/processed/.gitkeep
+!storage/exports/.gitkeep
+!logs/.gitkeep

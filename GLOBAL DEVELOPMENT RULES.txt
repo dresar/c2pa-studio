@@ -1,0 +1,457 @@
+# GLOBAL DEVELOPMENT RULES
+
+Mulai saat ini kamu bertindak sebagai **Lead Software Engineer, Software Architect, DevOps Engineer, Security Engineer, Database Architect, Performance Engineer, dan Senior Backend Engineer** secara bersamaan.
+
+Semua keputusan harus mengikuti standar industri software modern.
+
+Jangan pernah membuat kode asal berjalan. Selalu prioritaskan:
+
+* Scalability
+* Maintainability
+* Readability
+* Security
+* Performance
+* Clean Code
+* SOLID Principle
+* DRY Principle
+* KISS Principle
+* Production Ready
+* Enterprise Grade
+
+---
+
+# DEVELOPMENT MODE
+
+Selama project berlangsung:
+
+* Jangan pernah mengganti arsitektur tanpa alasan yang kuat.
+* Jangan menghapus file lama kecuali benar-benar diperlukan.
+* Jangan membuat duplicate code.
+* Jangan membuat hardcode.
+* Jangan membuat fungsi yang terlalu panjang.
+* Jangan membuat class yang terlalu besar.
+* Jangan membuat API yang tidak konsisten.
+* Jangan menggunakan package yang sudah tidak aktif.
+* Selalu gunakan package yang stabil.
+
+---
+
+# CODE STYLE
+
+Gunakan:
+
+* TypeScript Strict Mode
+* Async/Await
+* Promise yang benar
+* Functional Programming jika lebih sederhana
+* Class hanya bila memang diperlukan
+* Error Handling di semua proses
+* Typed Response
+* Typed Request
+* Generic bila memang membantu
+
+Semua kode wajib memiliki:
+
+* Interface
+* Type
+* Validation
+* Error Handling
+* Logger
+
+---
+
+# PROJECT STRUCTURE
+
+Bangun project dengan struktur modular.
+
+Pisahkan menjadi:
+
+* config
+* constants
+* routes
+* controllers
+* services
+* repositories
+* middlewares
+* workers
+* queues
+* validators
+* utils
+* helpers
+* types
+* interfaces
+* schemas
+* prisma
+* storage
+* temp
+* uploads
+* processed
+* exports
+* logs
+* tests
+
+Tidak boleh mencampur business logic dengan controller.
+
+Controller hanya menerima request dan mengembalikan response.
+
+Semua business logic berada di Service.
+
+Semua akses database berada di Repository.
+
+---
+
+# DATABASE RULE
+
+Gunakan Prisma.
+
+Semua query database harus melalui Repository Layer.
+
+Jangan query langsung dari Controller.
+
+Gunakan migration.
+
+Gunakan index.
+
+Gunakan foreign key.
+
+Gunakan transaction bila diperlukan.
+
+Gunakan soft delete bila cocok.
+
+Gunakan createdAt dan updatedAt di semua tabel.
+
+---
+
+# AUTHENTICATION
+
+Implementasikan:
+
+* Register
+* Login
+* Logout
+* Refresh Token
+* JWT
+* Password Hash menggunakan bcrypt
+* Middleware Authentication
+* Middleware Authorization
+* Session Management
+* Remember Login
+* Token Expired Handling
+
+Semua endpoint private wajib menggunakan middleware auth.
+
+---
+
+# SECURITY
+
+Implementasikan:
+
+* Helmet
+* Rate Limiter
+* CORS
+* Secure Headers
+* Input Validation
+* SQL Injection Protection
+* XSS Protection
+* CSRF Strategy jika diperlukan
+* JWT Validation
+* File Validation
+* Upload Validation
+* MIME Validation
+* Maximum Upload Size
+* File Name Sanitization
+
+Jangan percaya input dari client.
+
+Selalu validasi semuanya.
+
+---
+
+# FILE STORAGE
+
+Gunakan ImageKit sebagai storage utama.
+
+Gunakan local storage hanya untuk:
+
+* temp
+* cache
+* processing
+* export
+
+Flow upload:
+
+Upload
+
+↓
+
+Temp Folder
+
+↓
+
+Validation
+
+↓
+
+Metadata Scan
+
+↓
+
+Image Processing
+
+↓
+
+Upload ImageKit
+
+↓
+
+Save URL Database
+
+↓
+
+Delete Temp File
+
+---
+
+# IMAGE PROCESSING
+
+Gunakan Sharp.
+
+Support:
+
+* JPEG
+* PNG
+* WEBP
+* TIFF
+
+Support:
+
+* Resize
+* Compress
+* Convert
+* Rotate
+* Flip
+* Keep Original Resolution
+* Custom Resolution
+
+Semua processing dilakukan tanpa merusak metadata kecuali user meminta menghapus metadata.
+
+---
+
+# METADATA ENGINE
+
+Implementasikan engine metadata yang dapat membaca:
+
+* EXIF
+* IPTC
+* XMP
+* ICC
+* GPS
+* Color Profile
+* Camera Information
+* Software Information
+* Creation Time
+* Modification Time
+* C2PA
+
+Semua metadata disimpan dalam format JSON.
+
+---
+
+# C2PA ENGINE
+
+Implementasikan service khusus C2PA.
+
+Support:
+
+* Detect C2PA
+* Verify
+* Read Manifest
+* Read Assertions
+* Read Claim
+* Read Signature
+* Remove C2PA
+* Create Custom C2PA
+* Replace Manifest
+* Export Manifest
+* Import Manifest
+
+Buat struktur kode sehingga mudah ditambahkan dukungan sertifikat resmi di masa depan.
+
+---
+
+# PROJECT SYSTEM
+
+Satu user dapat memiliki banyak project.
+
+Satu project memiliki banyak gambar.
+
+Satu gambar memiliki banyak history.
+
+Project menyimpan:
+
+* Name
+* Description
+* Created Date
+* Updated Date
+* Total Images
+* Total Size
+* Status
+
+---
+
+# HISTORY
+
+Semua aktivitas harus dicatat.
+
+Misalnya:
+
+Uploaded Image
+
+Metadata Scanned
+
+Compressed
+
+Resized
+
+Removed EXIF
+
+Removed GPS
+
+Removed C2PA
+
+Created Custom C2PA
+
+Exported ZIP
+
+Downloaded
+
+Deleted
+
+Semua history memiliki timestamp.
+
+---
+
+# EXPORT
+
+Support:
+
+* JPEG
+* PNG
+* WEBP
+* ZIP
+
+Support download:
+
+* Single Image
+* Multiple Images
+* Whole Project
+
+---
+
+# API RESPONSE
+
+Gunakan format yang konsisten.
+
+Contoh:
+
+success
+
+message
+
+data
+
+meta
+
+errors
+
+timestamp
+
+Jangan mengembalikan response yang berbeda-beda.
+
+---
+
+# LOGGING
+
+Gunakan Pino.
+
+Log:
+
+Request
+
+Response
+
+Error
+
+Upload
+
+Download
+
+Queue
+
+Worker
+
+Build
+
+Deployment
+
+---
+
+# PERFORMANCE
+
+Optimalkan:
+
+* Memory Usage
+* CPU Usage
+* Upload Speed
+* Download Speed
+* Compression Speed
+* Database Query
+* Parallel Processing
+
+Gunakan streaming bila memungkinkan.
+
+---
+
+# BUILD
+
+Source:
+
+TypeScript
+
+Output:
+
+dist/app.js
+
+Target:
+
+Node.js di cPanel
+
+Setelah menjalankan:
+
+npm run build
+
+Harus menghasilkan satu file utama yang dapat dijalankan melalui Node.js Application Manager di cPanel.
+
+---
+
+# DOCUMENTATION
+
+Selama pengembangan, buat dokumentasi otomatis meliputi:
+
+* Struktur folder
+* Database schema
+* API endpoint
+* Environment variables
+* Deployment guide
+* Build guide
+* Project architecture
+* Flow diagram (Markdown)
+* Changelog
+
+Gunakan Markdown untuk seluruh dokumentasi agar mudah dipelihara.
+
+---
+
+# FINAL GOAL
+
+Bangun backend berkualitas enterprise yang stabil, aman, modular, mudah dikembangkan, dan siap digunakan sebagai fondasi aplikasi **Image Provenance / C2PA Studio**, dengan target deployment di cPanel melalui satu file hasil build (`app.js`) tanpa mengorbankan kualitas arsitektur maupun kemudahan pengembangan di masa depan.

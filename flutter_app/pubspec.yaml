@@ -1,0 +1,79 @@
+name: image_provenance_studio
+description: Image Provenance Studio — Professional C2PA & metadata management tool
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ─── State Management ───────────────────────
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # ─── Navigation ─────────────────────────────
+  go_router: ^14.2.7
+
+  dio: ^5.7.0
+
+  # ─── Code Generation ────────────────────────
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # ─── Local Storage ──────────────────────────
+  drift: ^2.18.0
+  sqlite3_flutter_libs: ^0.6.0+eol
+  shared_preferences: ^2.3.2
+  flutter_secure_storage: ^9.2.2
+
+  # ─── File Handling ──────────────────────────
+  file_picker: ^8.1.2
+  desktop_drop: ^0.7.1
+  path_provider: ^2.1.4
+  path: ^1.9.0
+
+  # ─── Image ──────────────────────────────────
+  cached_network_image: ^3.4.1
+  image: ^4.2.0
+  flutter_image_compress: ^2.3.0
+
+  # ─── UI & Animations ────────────────────────
+  flutter_animate: ^4.5.0
+  google_fonts: ^6.2.1
+  responsive_framework: ^1.5.1
+  shimmer: ^3.0.0
+  lottie: ^3.1.2
+  fl_chart: ^0.69.0
+
+  # ─── Icons & Assets ─────────────────────────
+  flutter_svg: ^2.0.10+1
+
+  # ─── Utilities ──────────────────────────────
+  intl: ^0.19.0
+  uuid: ^4.5.1
+  equatable: ^2.0.5
+  collection: ^1.18.0
+  dartz: ^0.10.1
+  logger: ^2.4.0
+  connectivity_plus: ^6.1.0
+  url_launcher: ^6.3.1
+  archive: ^3.6.1
+  http: ^1.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.12
+  riverpod_generator: ^2.4.3
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  drift_dev: ^2.18.0
+
+flutter:
+  uses-material-design: true
+
+

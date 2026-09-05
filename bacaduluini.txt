@@ -1,0 +1,93 @@
+Kamu adalah **programmer profesional senior** yang sangat berpengalaman membangun backend production-grade. Buat backend aplikasi **Image Provenance / C2PA Tools** dari nol dengan kualitas rapi, scalable, aman, dan siap deploy ke **cPanel**.
+
+Tugas utama kamu:
+
+* Bangun backend menggunakan **Node.js + TypeScript**
+* Hasil build akhir harus menjadi **satu file `app.js`** yang bisa dijalankan di cPanel
+* Struktur source code harus tetap modular di folder `src/`, tetapi output build harus ringkas untuk deployment
+* Fokus pada backend saja, frontend belum dikerjakan
+* Semua keputusan teknis harus mempertimbangkan penggunaan **pribadi satu user**, tetapi arsitektur tetap profesional agar mudah dikembangkan nanti
+
+Gunakan stack berikut:
+
+* Node.js LTS terbaru
+* TypeScript
+* Fastify
+* Prisma ORM
+* PostgreSQL
+* JWT auth
+* Zod validation
+* Pino logger
+* Sharp untuk kompresi dan resize gambar
+* ExifTool untuk metadata umum
+* C2PA processing engine yang sesuai dan realistis untuk backend Node.js
+* Redis + BullMQ jika memang dibutuhkan untuk queue processing
+* esbuild atau tsup untuk build menjadi satu file `app.js`
+
+Sumber file gambar:
+
+* Untuk file sementara, boleh gunakan folder lokal di server
+* Untuk storage utama, sarankan solusi yang paling tepat antara **ImageKit**, **Cloudinary**, atau storage folder cPanel, lalu pilih satu yang paling cocok untuk kebutuhan aplikasi ini dan jelaskan melalui implementasi kode dan struktur project
+* Jika menyarankan storage cloud, backend harus tetap mendukung file temporary lokal untuk proses upload, scan, edit, dan export
+
+Tujuan aplikasi:
+
+* Upload 1–10 gambar sekaligus
+* Scan metadata otomatis
+* Cek C2PA
+* Remove C2PA
+* Buat C2PA custom
+* Kompres gambar
+* Pertahankan ukuran asli bila diminta
+* Simpan history project
+* Simpan riwayat proses
+* Mendukung auth agar file dan project sebelumnya bisa diakses lagi
+* Siap untuk batch processing
+* Siap diekspor sebagai ZIP atau file individual
+
+Kebutuhan penting:
+
+* Gunakan clean architecture atau modular architecture yang rapi
+* Pisahkan layer: routes, controllers, services, repositories, workers, utils, config, middlewares
+* Semua fungsi harus type-safe
+* Semua input harus divalidasi
+* Semua error harus ditangani dengan benar
+* Semua log harus jelas
+* Semua proses berat jangan dibebankan ke route utama
+* Siapkan queue atau worker jika memang perlu untuk proses batch
+* Siapkan sistem project, image, metadata, history, export, dan settings
+* Siapkan auth login/register yang aman
+* Siapkan endpoint API yang lengkap dan terstruktur
+
+Yang harus kamu hasilkan:
+
+1. Struktur folder lengkap project
+2. Skema database Prisma
+3. Daftar API endpoint lengkap
+4. Arsitektur service/worker yang jelas
+5. Implementasi TypeScript untuk backend
+6. Konfigurasi build menjadi satu file `app.js`
+7. Instruksi deployment ke cPanel
+8. Penanganan upload, scan metadata, kompresi, history, dan export
+9. Implementasi auth dan session token
+10. Kode yang bisa langsung dikembangkan ke tahap berikutnya
+
+Aturan kerja:
+
+* Jangan buat kode asal-asalan
+* Jangan menulis mock code kalau bisa dibuat realistis
+* Jangan mencampur frontend dalam tugas ini
+* Jangan menyederhanakan hal penting yang seharusnya production-ready
+* Jika ada keputusan teknis yang lebih baik, pilih yang paling masuk akal untuk cPanel dan penggunaan pribadi
+* Buat hasil yang modular, jelas, dan mudah di-maintain
+* Gunakan bahasa yang rapi di komentar kode
+* Pastikan output build bisa dijalankan langsung di cPanel sebagai `app.js`
+
+Mulai dengan:
+
+* arsitektur project
+* struktur folder
+* schema database
+* lalu implementasi backend inti
+
+Buat semuanya dalam bahasa Inggris untuk code, nama file, fungsi, dan komentar teknis. Jika perlu penjelasan singkat, boleh pakai bahasa Indonesia. Fokus utama adalah menghasilkan backend yang benar-benar siap dikerjakan dan dibuild.
